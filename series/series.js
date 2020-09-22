@@ -7,8 +7,10 @@
 export function slices(s, size) {
   const result = [];
   if (size < 1) return result;
+
   for (let i = 0; i <= s.length - size; i++) {
     result.push(s.slice(i, i + size));
   }
+  
   return result;
 }
