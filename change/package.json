@@ -32,5 +32,7 @@
     "lint-test": "eslint . && jest --no-cache ./* "
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "memoizee": "^0.4.14"
+  }
 }
