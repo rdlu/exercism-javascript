@@ -1,3 +1,5 @@
+let G = require('generatorics')
+
 export class Change {
     calculate(coins, target) {
         if (target === 0) return []
@@ -14,7 +16,7 @@ export class Change {
     }
 
     // some JS libraries call it baseN, other people call it k-selection or k-multiset
-    // TODO: test with js-combinatorics library, it uses lazy generators
+    // using js-combinatorics, genratorics library, etc is taking much more time for some weird reason
     combinations_with_repetition(lst, n) {
         return n ? (
             lst.length ? this.combinations_with_repetition(lst, n - 1).map(function (t) {
