@@ -1,5 +1,3 @@
-let G = require('generatorics')
-
 export class Change {
     calculate(coins, target) {
         if (target === 0) return []
