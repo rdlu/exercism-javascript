@@ -5,9 +5,9 @@ export class Scale {
 
   constructor(tonic) {
     this.notes = Scale.sharpKeys.has(tonic) ? Scale.sharps : Scale.flats
-    this.root = this.notes.indexOf(tonic[0].toUpperCase() + tonic.slice(1))
+    this.rootIndex = this.notes.indexOf(tonic[0].toUpperCase() + tonic.slice(1))
 
-    if (this.root === -1) throw new Error(`"${tonic}" is not a tonic.`)
+    if (this.rootIndex === -1) throw new Error(`"${tonic}" is not a tonic.`)
   }
 
   chromatic() {
@@ -15,7 +15,7 @@ export class Scale {
   }
 
   interval(intervals) {
-    let index = this.root
+    let index = this.rootIndex
     const result = [this.notes[index]]
     for (const interval of intervals) {
       index = (index + { m: 1, M: 2, A: 3 }[interval]) % 12
