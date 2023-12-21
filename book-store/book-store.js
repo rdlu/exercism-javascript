@@ -1,7 +1,8 @@
 export const cost = (books) => {
   const bookPrice = 800;
   const discounts = [1, 0, 0.05, 0.1, 0.2, 0.25];
-  const bookSetPrice = discounts.map((x) => bookPrice * (1-x));
+  const setPrices = discounts.map((x) => bookPrice * (1-x));
+  const setPrice = (qty) => (setPrices.at(qty) || setPrices.at(-1)) * qty;
   const removeItem = (arr, item) => arr.splice(arr.indexOf(item), 1);
   const subtractFromCollection = (dstArr, srcSet) => srcSet.forEach(item => removeItem(dstArr, item));
 
@@ -20,5 +21,5 @@ export const cost = (books) => {
     booksSets.push(4, 4);
   }
 
-  return booksSets.reduce((basketTotal, setQty) => basketTotal + setQty * bookSetPrice[setQty], 0);
+  return booksSets.reduce((basketTotal, setQty) => basketTotal + setPrice(setQty), 0);
 };
