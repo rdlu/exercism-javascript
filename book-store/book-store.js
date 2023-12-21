@@ -2,15 +2,15 @@ export const cost = (books) => {
   const bookPrice = 800;
   const discounts = [1, 0, 0.05, 0.1, 0.2, 0.25];
   const bookSetPrice = discounts.map((x) => bookPrice * (1-x));
+  const removeItem = (arr, item) => arr.splice(arr.indexOf(item), 1);
+  const subtractFromCollection = (dstArr, srcSet) => srcSet.forEach(item => removeItem(dstArr, item));
 
   let booksSets = [];
 
   while (books.length > 0) {
     let set = new Set(books);
     booksSets.push(set.size);
-    for (let i of set) {
-      books.splice(books.indexOf(i), 1);
-    }
+    subtractFromCollection(books, set);
   } 
 
   // sets of 4+4 are better deal than sets of 3+5
