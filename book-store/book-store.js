@@ -15,8 +15,8 @@ export const cost = (books) => {
 
   // sets of 4+4 are better deal than sets of 3+5
   while (booksSets.includes(3) && booksSets.includes(5)) {
-    booksSets.splice(booksSets.indexOf(3), 1);
-    booksSets.splice(booksSets.indexOf(5), 1);
+    removeItem(booksSets, 3);
+    removeItem(booksSets, 5);
     booksSets.push(4, 4);
   }
 
