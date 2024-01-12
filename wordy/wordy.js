@@ -13,32 +13,29 @@ export const answer = (question) => {
   return result(extractNum(tokens[0]));
 };
 
+const throws = (err) => { throw err };
 const extractNum = (token) => {
-  const num = parseInt(token, 10);
-  if (isNaN(num)) {
-    throw new Error("Syntax error");
-  }
-  return num;
+  return Number(token) || throws(new Error("Syntax error"));
 }
+const operations =  {
+    "plus": (x, y) => x + y,
+    "minus": (x, y) => x - y,
+    "divided": (x, y) => x / y,
+    "multiplied": (x, y) => x * y,
+};
+const validOps = Object.keys(operations);
 
 const extractOperation = (token, total) => {
-  checkInt(total);
-
-  const operations = {
-    "plus": x => total + x,
-    "minus": x => total - x,
-    "divided": x => Math.floor(total / x),
-    "multiplied": x => total * x,
-  };
-
-  if (!(token in operations)) {
-    if (isNaN(parseInt(token))) {
-      throw new Error("Unknown operation");
+  if (!validOps.includes(token)) {
+    // weird specs
+    if (parseInt(token)) {
+      throw new Error("Syntax error");
     }
-    throw new Error("Syntax error");
+
+    throw new Error("Unknown operation");
   }
 
-  return operations[token];
+  return (y) => operations[token].apply(this, [total, y]);
 };
 
 const cleanQuestion = (question) => {
@@ -53,8 +50,3 @@ const cleanQuestion = (question) => {
     .trim();
 }
 
-const checkInt = (value) => {
-  if (!Number.isInteger(value)) {
-    throw new Error('Syntax error');
-  }
-};
