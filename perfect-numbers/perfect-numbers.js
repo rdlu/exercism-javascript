@@ -1,14 +1,13 @@
+const range = (start, end) => new Array(end).fill(start).map((n, i) => n + i)
+const factors = (n) => range(1, Math.floor(n / 2)).filter(elem => n % elem === 0)
+
 export const classify = (number) => {
-  if (number <= 0) {
-    throw new Error('Classification is only possible for natural numbers.');
+  if (number <= 0 || !Number.isInteger(number)) {
+    throw new Error('Classification is only possible for natural numbers.')
   }
 
-  let sum = 0;
-  for (let i = 1; i <= Math.floor(number / 2); i++) {
-    if (number % i === 0) {
-      sum += i;
-    }
-  }
+  const nFactors = factors(number)
+  const sum = nFactors.reduce((total, factor) => total += factor, 0)
 
   if (sum === number) {
     return 'perfect';
