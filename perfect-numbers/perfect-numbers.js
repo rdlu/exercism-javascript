@@ -1,4 +1,6 @@
 const range = (start, end) => new Array(end).fill(start).map((n, i) => n + i)
+const sum = (arr) => arr.reduce((total, cur) => total += cur, 0)
+
 const factors = (n) => range(1, Math.floor(n / 2)).filter(elem => n % elem === 0)
 
 export const classify = (number) => {
@@ -6,16 +8,15 @@ export const classify = (number) => {
     throw new Error('Classification is only possible for natural numbers.')
   }
 
-  const nFactors = factors(number)
-  const sum = nFactors.reduce((total, factor) => total += factor, 0)
+  const div_sum = sum(factors(number))
 
-  if (sum === number) {
-    return 'perfect';
+  if (div_sum === number) {
+    return 'perfect'
   }
 
-  if (sum > number) {
-    return 'abundant';
+  if (div_sum > number) {
+    return 'abundant'
   }
 
-  return 'deficient';
-};
+  return 'deficient'
+}
