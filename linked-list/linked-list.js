@@ -16,41 +16,37 @@ class Node {
 
 export class LinkedList {
   constructor() {
-    this.head = null;
-    this.tail = null;
+    this.tail = new Node(null);
+    this.head = new Node(null, this.tail);
+    this.tail.prev = this.head;
   }
 
   push(value) {
-    this.tail = new Node(value, null, this.tail);
-    this.head ??= this.tail;
+    this.tail.prev = new Node(value, this.tail, this.tail.prev);
+    this.head.next ??= this.tail.prev;
     return value;
   }
 
   unshift(value) {
-    this.head = new Node(value, this.head, null);
-    this.tail ??= this.head;
+    this.head.next = new Node(value, this.head.next, this.head);
+    this.tail.prev ??= this.head.next;
     return value;
   }
 
   pop() {
-    const popped = this.tail;
-    this.tail = popped?.prev;
-    if(!popped.prev) this.head = null;
-    return popped?.implode();
+    return this.tail.prev.implode();
   }
 
   shift() {
-    const popped = this.head;
-    this.head = popped?.next;
-    return popped?.implode();
+    return this.head.next.implode();
   }
 
   count() {
     let count = 0;
     let curNode = this.head;
-    while (curNode) {
+    while (curNode.next !== this.tail) {
       curNode = curNode.next;
-      count += 1;
+      count ++;
     }
 
     return count;
@@ -68,10 +64,6 @@ export class LinkedList {
 
   delete(value) {
     const node = this.find(value);
-    if(this.head === node) this.head = node.next;
-    if(this.tail === node) this.tail = node.prev;
     return node?.implode();
   }
-
-
 }
